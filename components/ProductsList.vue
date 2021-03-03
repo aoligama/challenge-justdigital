@@ -42,13 +42,25 @@ export default {
     this.isLoading = true
     products.get()
     .then((res) => {
-        this.listProducts = res.data.products
-        this.qtdProducts = res.data.products.length
-        console.log(this.listProducts)
+      this.listProducts = res.data.products
+      this.qtdProducts = res.data.products.length
+      this.buildInventory()
     })
     .finally(() => {
-        this.isLoading = false
+      this.isLoading = false
     })
+  },
+  methods: {
+    buildInventory() {
+      let inventory = []
+      for(let product of this.listProducts){
+        inventory.push({
+          id: product.id,
+          quantity: product.quantity
+        })
+      }
+      this.$store.commit('setInventory', inventory)
+    }
   }
 }
 </script>

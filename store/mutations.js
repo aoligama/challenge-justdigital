@@ -8,7 +8,10 @@ const mutations = {
       state.snackbar.textclose = 'Fechar'
     },
     setCart(state, cart) {
-        state.cart = cart
+      state.cart = cart
+    },
+    setInventory(state, inventory) {
+      state.inventory = inventory
     },
 }
   
