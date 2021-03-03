@@ -6,7 +6,10 @@ const mutations = {
       state.snackbar.color = value.color ? value.color : 'primary'
       state.snackbar.top = value.top ? value.top : false
       state.snackbar.textclose = 'Fechar'
-    }
+    },
+    setCart(state, cart) {
+        state.cart = cart
+    },
 }
   
 export default mutations

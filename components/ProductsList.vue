@@ -44,6 +44,7 @@ export default {
     .then((res) => {
         this.listProducts = res.data.products
         this.qtdProducts = res.data.products.length
+        console.log(this.listProducts)
     })
     .finally(() => {
         this.isLoading = false

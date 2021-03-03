@@ -5,8 +5,9 @@ const state = () => ({
       timeout: 3000,
       color: 'primary',
       top: false
-    }
-  })
+    },
+    cart: []
+})
   
-  export default state
+export default state
   
