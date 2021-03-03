@@ -17,7 +17,7 @@
             nuxt
             to="cart"
           >
-            <v-icon class="kc-button" color="#4C4C4C">
+            <v-icon color="#4C4C4C">
               mdi-cart
             </v-icon>
           </v-btn>

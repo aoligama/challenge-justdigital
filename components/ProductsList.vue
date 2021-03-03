@@ -1,26 +1,27 @@
 <template>
   <v-container class="my-12 container" flat>
     <v-row class="mr-0">
-        <v-col>
-            <h5>
-                Celulares e Smartphones
-            </h5>
-        </v-col>
+      <v-col>
+        <h5>
+          Celulares e Smartphones
+        </h5>
+      </v-col>
     </v-row>
     <v-row class="mr-0">
-        <v-col>
-            <small class="grey--text">{{ qtdProducts }} Produtos</small>
-        </v-col>
+      <v-col>
+        <small class="grey--text">{{ qtdProducts }} Produtos</small>
+      </v-col>
     </v-row>
     <v-row class="products-grid mr-0" v-if="!isLoading">
-        <v-col cols="4" v-for="(product, index) in listProducts" :key="index">
-            <div class="card-product">
-                <img :src="product.picture">
-                <span class="span-title">{{ product.title }}</span>
-                <span class="span-price">R$ {{ product.price }}</span>
-                <v-btn class="btn btn-buy" color="#36d33b" @click="addToCart(product)">comprar</v-btn>
-            </div>
-        </v-col>
+      <v-col cols="4" v-for="(product, index) in listProducts" :key="index">
+        <div class="card-product">
+          <img :src="product.picture">
+          <span class="span-title">{{ product.title }}</span>
+          <small class="caption grey--text">{{ product.brand }}</small>
+          <span class="span-price">R$ {{ product.price }}</span>
+          <v-btn class="btn btn-buy" color="#36d33b" @click="addToCart(product)">comprar</v-btn>
+        </div>
+      </v-col>
     </v-row>
     
   </v-container>
@@ -135,7 +136,7 @@ h5 {
     position: relative;
     margin-bottom: 30px;
     background-color: white;
-    height: 320px;
+    height: 340px;
     transition: 0.2s;
     cursor: pointer;
 

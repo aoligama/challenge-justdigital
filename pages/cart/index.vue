@@ -17,6 +17,24 @@
         <img :src="product.picture">
         <span class="span-title">{{ product.title }}</span>
         <span class="span-price">R$ {{ product.price }}</span>
+
+        <v-text-field
+          class="input-quant"
+          label="Qtd"
+          :value="product.quantity"
+          type="number"
+        ></v-text-field>
+
+        <v-btn
+          class="btn-delete"
+          small
+          color="#ed4e62"
+          nuxt
+          >
+            <v-icon color="#FFF">
+              mdi-delete
+            </v-icon> Excluir
+          </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -91,6 +109,20 @@ h5 {
     height: 150px;
     transition: 0.2s;
     cursor: pointer;
+
+    .btn-delete {
+      color: #FFF;
+      position: absolute;
+      margin-top: 80px;
+      margin-left: 62%;
+    }
+
+    .input-quant {
+      width: 50px;
+      position: absolute;
+      margin-top: -90px;
+      margin-left: 71%;
+    }
 
     &:hover {
       box-shadow: 0px 10px 30px rgba(56, 50, 152, 0.1);
