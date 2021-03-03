@@ -15,7 +15,7 @@
     <v-row class="products-grid mr-0" v-if="!isLoading">
       <v-col cols="4" v-for="(product, index) in listProducts" :key="index">
         <div class="card-product">
-          <img :src="product.picture">
+          <img :src="product.picture" @error="setFallbackImageUrl">
           <span class="span-title">{{ product.title }}</span>
           <small class="caption grey--text">{{ product.brand }}</small>
           <span class="span-price">R$ {{ product.price }}</span>
@@ -62,26 +62,40 @@ export default {
       }
       this.$store.commit('setInventory', inventory)
     },
-    checkInventory(id) {
+    setFallbackImageUrl(event) {
+      event.target.src = 'https://imagens.canaltech.com.br/produto/buscape/o292298908.jpg'
+    },
+    checkInventory(id, prodQuantity) {
       let inventory = this.$store.getters['inventory']
+      let quantity = inventory.find((el) => el.id === id ).quantity
+
+      if(quantity >= prodQuantity) {
+        return true
+      } else {
+        return false
+      }
     },
     addToCart(product) {
       let cart = this.$store.getters['cart']
-
       let currentCart = cart.find((el) => el.id === product.id )
-      // console.log(currentCart)
 
       if(currentCart !== undefined) {
-        // product.quantity++
-        console.log(cart)
+        let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
+
+        this.checkInventory(product.id, cart[prodIndex].quantity + 1) 
+          ? cart[prodIndex].quantity++ 
+          : this.$store.commit('showSnackbar', {
+            text: 'Oops! Nosso estoque está esgotado :(',
+            timeout: 3000,
+            color: 'error'
+          })
+        
       } else {
         product.quantity = 1
         cart.push(product)
       }
 
       this.$store.commit('setCart', cart)
-
-      // console.log(this.$store.getters['cart'])
       
     }
   }

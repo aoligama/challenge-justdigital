@@ -14,7 +14,7 @@
     </v-row>
     <v-row class="products-grid mr-0">
       <v-col cols="12" class="card-product" v-for="(product, index) in listProducts" :key="index">
-        <img :src="product.picture">
+        <img :src="product.picture" @error="setFallbackImageUrl">
         <span class="span-title">{{ product.title }}</span>
         <span class="span-price">R$ {{ product.price }}</span>
 
@@ -30,6 +30,7 @@
           small
           color="#ed4e62"
           nuxt
+          @click="deleteProduct(product.id)"
           >
             <v-icon color="#FFF">
               mdi-delete
@@ -57,7 +58,28 @@ export default {
     this.listProducts = this.$store.getters['cart']
     this.qtdItems = this.listProducts.length
   },
-  methods: {}
+  methods: {
+    setFallbackImageUrl(event) {
+      event.target.src = 'https://imagens.canaltech.com.br/produto/buscape/o292298908.jpg'
+    },
+    deleteProduct(productId){
+      const cart = this.$store.getters['cart']
+      let removeIndex = cart.map(product => product.id).indexOf(productId)
+      ~removeIndex && cart.splice(removeIndex, 1)
+
+      this.$store.commit('setCart', cart)
+
+      this.$store.commit('showSnackbar', {
+        text: 'Produto removido do carrinho',
+        timeout: 3000,
+        color: 'success'
+      })
+
+      this.$router.push({
+        path: '/'
+      })
+    }
+  }
 }
 </script>
 <style lang="scss" scoped>
