@@ -1,8 +1,8 @@
 <template>
-  <v-app light>
+  <v-app >
     <div>
       <Header v-if="render" />
-      <v-main v-if="render" class="white">
+      <v-main v-if="render" class="background-grey">
         <nuxt />
         <v-snackbar v-model="snackbar.show" :top="snackbar.top" :timeout="snackbar.timeout" :color="snackbar.color" multi-line>
           <h3 class="font-weight-thin">
@@ -49,3 +49,9 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.background-grey {
+  background-color: #F7F7F7;
+}
+</style>

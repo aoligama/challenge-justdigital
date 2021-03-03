@@ -178,7 +178,7 @@ export async function setContext (app, context) {
       payload: context.payload,
       error: context.error,
       base: app.router.options.base,
-      env: {}
+      env: {"NUXT_ENV_API_PRODUCTS":"https://api-desafio-front.justdigital.com.br"}
     }
     // Only set once
 

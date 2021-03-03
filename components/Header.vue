@@ -1,17 +1,13 @@
 <template>
-  <div fluid class="white ma-0 pa-0">
-    <v-container class="pa-2 d-flex">
-      <v-toolbar color="white" flat>
-        <v-toolbar-title>
-          <nuxt-link to="/">
-            <span>SuperCart</span>
-          </nuxt-link>
-        </v-toolbar-title>
-
-        <v-spacer />
-      </v-toolbar>
-    </v-container>
-  </div>
+    <div fluid class="white ma-0 pa-0" >
+        <v-toolbar color="white" style="width: 100% !important">
+            <v-toolbar-title>
+                <nuxt-link to="/">
+                    <span>SuperCart</span>
+                </nuxt-link>
+            </v-toolbar-title>
+        </v-toolbar>
+    </div>
 </template>
 
 <script>

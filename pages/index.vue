@@ -1,13 +1,16 @@
 <template>
-  <div>
-
+  <div class="content">
+    <products-list />
   </div>
 </template>
 
 <script>
+import ProductsList from '../components/ProductsList'
 
 export default {
-  components: {},
+  components: {
+    ProductsList
+  },
   head () {
     return {
       title: 'SuperCart | Produtos'
@@ -15,6 +18,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss" scoped>
-</style>
