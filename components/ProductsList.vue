@@ -9,7 +9,7 @@
     </v-row>
     <v-row class="mr-0">
         <v-col>
-            <small class="grey--text">{{qtdProducts}} Produtos</small>
+            <small class="grey--text">{{ qtdProducts }} Produtos</small>
         </v-col>
     </v-row>
     <v-row class="products-grid mr-0" v-if="!isLoading">
@@ -18,7 +18,7 @@
                 <img :src="product.picture">
                 <span class="span-title">{{ product.title }}</span>
                 <span class="span-price">R$ {{ product.price }}</span>
-                <v-btn class="btn btn-buy" color="#36d33b">COMPRAR</v-btn>
+                <v-btn class="btn btn-buy" color="#36d33b">comprar</v-btn>
             </div>
         </v-col>
     </v-row>
@@ -106,6 +106,11 @@ h5 {
 
     &:hover {
       box-shadow: 0px 10px 30px rgba(56, 50, 152, 0.1);
+    }
+
+    .btn-buy {
+        width: 200px;
+        color: #FFF;
     }
 
     h5 {
