@@ -17,9 +17,12 @@
             nuxt
             to="cart"
           >
+          <v-badge left :content="getProductsQuant">
             <v-icon color="#4C4C4C">
               mdi-cart
             </v-icon>
+          </v-badge>
+            
           </v-btn>
         </template>
         </v-toolbar-items>
@@ -32,10 +35,15 @@ export default {
   name: 'Header',
   data () {
     return {
-      tab: null,
+      quantProducts: 0,
       drawer: false,
     }
   },
+  computed: {
+    getProductsQuant() {
+      return this.quantProducts = this.$store.getters['cart'].length
+    }
+  }
 }
 </script>
 

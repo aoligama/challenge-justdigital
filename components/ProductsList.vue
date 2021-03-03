@@ -82,17 +82,29 @@ export default {
       if(currentCart !== undefined) {
         let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
 
-        this.checkInventory(product.id, cart[prodIndex].quantity + 1) 
-          ? cart[prodIndex].quantity++ 
-          : this.$store.commit('showSnackbar', {
+        if(this.checkInventory(product.id, cart[prodIndex].quantity + 1) ) {
+          cart[prodIndex].quantity++ 
+          this.$store.commit('showSnackbar', {
+            text: 'Produto adicionado ao carrinho',
+            timeout: 3000,
+            color: 'success'
+          })
+        } else {
+          this.$store.commit('showSnackbar', {
             text: 'Oops! Nosso estoque está esgotado :(',
             timeout: 3000,
             color: 'error'
           })
+        }
         
       } else {
         product.quantity = 1
         cart.push(product)
+        this.$store.commit('showSnackbar', {
+          text: 'Produto adicionado ao carrinho',
+          timeout: 3000,
+          color: 'success'
+        })
       }
 
       this.$store.commit('setCart', cart)
