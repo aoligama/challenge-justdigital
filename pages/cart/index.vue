@@ -28,14 +28,38 @@
         <v-btn
           class="btn-delete"
           small
-          color="#ed4e62"
+          text
           nuxt
           @click="deleteProduct(product.id)"
-          >
-            <v-icon color="#FFF">
-              mdi-delete
-            </v-icon> Excluir
-          </v-btn>
+        >
+          <v-icon color="#9191a0">
+            mdi-delete
+          </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="btn-add"
+          small
+          color="#056ff5"
+          nuxt
+          @click="add(product)"
+        >
+          <v-icon color="#FFF">
+            mdi-plus-thick
+          </v-icon>
+        </v-btn>
+
+        <v-btn
+          class="btn-remove"
+          small
+          color="#ed4e62"
+          nuxt
+          @click="remove(product.id)"
+        >
+          <v-icon color="#FFF">
+            mdi-minus-thick
+          </v-icon>
+        </v-btn>
       </v-col>
     </v-row>
   </v-container>
@@ -78,6 +102,41 @@ export default {
       this.$router.push({
         path: '/'
       })
+    },
+    checkInventory(id, prodQuantity) {
+      let inventory = this.$store.getters['inventory']
+      let quantity = inventory.find((el) => el.id === id ).quantity
+
+      if(quantity >= prodQuantity) {
+        return true
+      } else {
+        return false
+      }
+    },
+    add(product) {
+      let cart = this.$store.getters['cart']
+      let currentCart = cart.find((el) => el.id === product.id )
+
+      if(currentCart !== undefined) {
+        let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
+
+        if(this.checkInventory(product.id, cart[prodIndex].quantity + 1) ) {
+          cart[prodIndex].quantity++ 
+          // this.success()
+        } else {
+          // this.error()
+        }
+        
+      } else {
+        product.quantity = 1
+        cart.push(product)
+        // this.success()
+      }
+
+      this.$store.commit('setCart', cart)
+    },
+    remove() {
+
     }
   }
 }
@@ -133,17 +192,30 @@ h5 {
     cursor: pointer;
 
     .btn-delete {
+      position: absolute;
+      margin-top: 0;
+      margin-left: 68%;
+    }
+
+    .btn-add {
       color: #FFF;
       position: absolute;
-      margin-top: 80px;
-      margin-left: 62%;
+      margin-top: 65px;
+      margin-left: 60%;
+    }
+
+    .btn-remove {
+      color: #FFF;
+      position: absolute;
+      margin-top: 65px;
+      margin-left: 67%;
     }
 
     .input-quant {
-      width: 50px;
+      width: 40px;
       position: absolute;
-      margin-top: -90px;
-      margin-left: 71%;
+      margin-top: -50px;
+      margin-left: 70%;
     }
 
     &:hover {

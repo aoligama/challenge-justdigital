@@ -16,14 +16,16 @@
             text
             nuxt
             to="cart"
+            width="90"
           >
-          <v-badge left :content="getProductsQuant">
-            <v-icon color="#4C4C4C">
-              mdi-cart
-            </v-icon>
-          </v-badge>
-            
+            <v-badge left :content="getProductsQuant">
+              <v-icon color="#4C4C4C">
+                mdi-cart
+              </v-icon>
+            </v-badge>
+            <small class="pt-11 green--text" style="position: absolute">R$ {{getTotalAmount}}</small>
           </v-btn>
+          
         </template>
         </v-toolbar-items>
     </v-toolbar>
@@ -36,12 +38,21 @@ export default {
   data () {
     return {
       quantProducts: 0,
+      totalAmount: 0,
       drawer: false,
     }
   },
   computed: {
     getProductsQuant() {
       return this.quantProducts = this.$store.getters['cart'].length
+    },
+    getTotalAmount(){
+      for(let prod of this.$store.getters['cart']) {
+        if(prod) {
+          this.totalAmount += prod.price
+        }
+      }
+      return this.totalAmount
     }
   }
 }

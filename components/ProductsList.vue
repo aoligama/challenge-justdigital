@@ -75,6 +75,20 @@ export default {
         return false
       }
     },
+    success() {
+      this.$store.commit('showSnackbar', {
+        text: 'Produto adicionado ao carrinho',
+        timeout: 3000,
+        color: 'success'
+      })
+    },
+    error() {
+      this.$store.commit('showSnackbar', {
+        text: 'Oops! Nosso estoque está esgotado :(',
+        timeout: 3000,
+        color: 'error'
+      })
+    },
     addToCart(product) {
       let cart = this.$store.getters['cart']
       let currentCart = cart.find((el) => el.id === product.id )
@@ -84,27 +98,15 @@ export default {
 
         if(this.checkInventory(product.id, cart[prodIndex].quantity + 1) ) {
           cart[prodIndex].quantity++ 
-          this.$store.commit('showSnackbar', {
-            text: 'Produto adicionado ao carrinho',
-            timeout: 3000,
-            color: 'success'
-          })
+          this.success()
         } else {
-          this.$store.commit('showSnackbar', {
-            text: 'Oops! Nosso estoque está esgotado :(',
-            timeout: 3000,
-            color: 'error'
-          })
+          this.error()
         }
         
       } else {
         product.quantity = 1
         cart.push(product)
-        this.$store.commit('showSnackbar', {
-          text: 'Produto adicionado ao carrinho',
-          timeout: 3000,
-          color: 'success'
-        })
+        this.success()
       }
 
       this.$store.commit('setCart', cart)
