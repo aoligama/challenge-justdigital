@@ -1,13 +1,30 @@
 <template>
-    <div fluid class="white ma-0 pa-0" >
-        <v-toolbar color="white" style="width: 100% !important">
-            <v-toolbar-title>
-                <nuxt-link to="/">
-                    <span>SuperCart</span>
-                </nuxt-link>
-            </v-toolbar-title>
-        </v-toolbar>
-    </div>
+  <div fluid class="white ma-0 pa-0" >
+    <v-toolbar color="white" style="width: 100% !important">
+      <v-toolbar-title>
+        <nuxt-link to="/">
+          <span>SuperCart</span>
+        </nuxt-link>
+      </v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-toolbar-items class="justify-end" justify-end>
+        <template justify-end>
+          <v-btn
+            name="drawer"
+            aria-label="drawer"
+            medium
+            text
+            nuxt
+            to="cart"
+          >
+            <v-icon class="kc-button" color="#4C4C4C">
+              mdi-cart
+            </v-icon>
+          </v-btn>
+        </template>
+        </v-toolbar-items>
+    </v-toolbar>
+  </div>
 </template>
 
 <script>
@@ -18,7 +35,7 @@ export default {
       tab: null,
       drawer: false,
     }
-  }
+  },
 }
 </script>
 

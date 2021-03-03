@@ -8,6 +8,10 @@
 import ProductsList from '../components/ProductsList'
 
 export default {
+  data () {
+    return {
+    }
+  },
   components: {
     ProductsList
   },
@@ -15,6 +19,6 @@ export default {
     return {
       title: 'SuperCart | Produtos'
     }
-  }
+  },
 }
 </script>

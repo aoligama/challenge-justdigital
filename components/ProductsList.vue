@@ -18,7 +18,7 @@
                 <img :src="product.picture">
                 <span class="span-title">{{ product.title }}</span>
                 <span class="span-price">R$ {{ product.price }}</span>
-                <v-btn class="btn btn-buy" color="#36d33b">comprar</v-btn>
+                <v-btn class="btn btn-buy" color="#36d33b" @click="addToCart(product)">comprar</v-btn>
             </div>
         </v-col>
     </v-row>
@@ -60,6 +60,28 @@ export default {
         })
       }
       this.$store.commit('setInventory', inventory)
+    },
+    checkInventory(id) {
+      let inventory = this.$store.getters['inventory']
+    },
+    addToCart(product) {
+      let cart = this.$store.getters['cart']
+
+      let currentCart = cart.find((el) => el.id === product.id )
+      // console.log(currentCart)
+
+      if(currentCart !== undefined) {
+        // product.quantity++
+        console.log(cart)
+      } else {
+        product.quantity = 1
+        cart.push(product)
+      }
+
+      this.$store.commit('setCart', cart)
+
+      // console.log(this.$store.getters['cart'])
+      
     }
   }
 }

@@ -13,6 +13,9 @@ const mutations = {
     setInventory(state, inventory) {
       state.inventory = inventory
     },
+    toggleShowCart(state, showCart) {
+      state.showCart = showCart
+    }
 }
   
 export default mutations
