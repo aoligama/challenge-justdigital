@@ -21,6 +21,7 @@
         <v-text-field
           class="input-quant"
           label="Qtd"
+          disabled
           :value="product.quantity"
           type="number"
         ></v-text-field>
@@ -54,7 +55,7 @@
           small
           color="#ed4e62"
           nuxt
-          @click="remove(product.id)"
+          @click="remove(product)"
         >
           <v-icon color="#FFF">
             mdi-minus-thick
@@ -84,12 +85,13 @@ export default {
   },
   methods: {
     setFallbackImageUrl(event) {
+      // função para adicionar imagem alternativa em caso de erros
       event.target.src = 'https://imagens.canaltech.com.br/produto/buscape/o292298908.jpg'
     },
     deleteProduct(productId){
       const cart = this.$store.getters['cart']
-      let removeIndex = cart.map(product => product.id).indexOf(productId)
-      ~removeIndex && cart.splice(removeIndex, 1)
+      let removeIndex = cart.map(product => product.id).indexOf(productId) // busca o index do produto no state do carrinho
+      ~removeIndex && cart.splice(removeIndex, 1) // remove o produto e define um novo estado
 
       this.$store.commit('setCart', cart)
 
@@ -103,9 +105,26 @@ export default {
         path: '/'
       })
     },
+    success() {
+      // quando o produto está em estoque
+      this.$store.commit('showSnackbar', {
+        text: 'Produto adicionado ao carrinho',
+        timeout: 3000,
+        color: 'success'
+      })
+    },
+    error() {
+      // quando o produto não está em estoque
+      this.$store.commit('showSnackbar', {
+        text: 'Oops! Nosso estoque está esgotado :(',
+        timeout: 3000,
+        color: 'error'
+      })
+    },
     checkInventory(id, prodQuantity) {
+
       let inventory = this.$store.getters['inventory']
-      let quantity = inventory.find((el) => el.id === id ).quantity
+      let quantity = inventory.find((el) => el.id === id ).quantity // verifica a quantidade do produto em estoque
 
       if(quantity >= prodQuantity) {
         return true
@@ -114,29 +133,45 @@ export default {
       }
     },
     add(product) {
+      
       let cart = this.$store.getters['cart']
       let currentCart = cart.find((el) => el.id === product.id )
 
       if(currentCart !== undefined) {
         let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
 
+        // verificação do estoque
         if(this.checkInventory(product.id, cart[prodIndex].quantity + 1) ) {
           cart[prodIndex].quantity++ 
-          // this.success()
+          this.success()
         } else {
-          // this.error()
+          this.error()
         }
-        
-      } else {
-        product.quantity = 1
-        cart.push(product)
-        // this.success()
       }
-
+      // atualiza o estado do carrinho
       this.$store.commit('setCart', cart)
     },
-    remove() {
+    remove(product) {
+      let cart = this.$store.getters['cart']
+      let currentCart = cart.find((el) => el.id === product.id )
 
+      if(currentCart !== undefined) {
+        let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
+
+        // verifica se a quantidade será 0
+        if(cart[prodIndex].quantity - 1 <= 0) {
+          this.$store.commit('showSnackbar', {
+            text: 'Oops! A quantidade do produto não pode ser zero',
+            timeout: 5000,
+            color: 'error'
+          })
+        } else {
+          cart[prodIndex].quantity--
+        }
+      }
+
+      // atualiza o estado do carrinho
+      this.$store.commit('setCart', cart)
     }
   }
 }

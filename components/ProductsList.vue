@@ -41,6 +41,8 @@ export default {
   },
   beforeMount() {
     this.isLoading = true
+
+    // chamada GET da API
     products.get()
     .then((res) => {
       this.listProducts = res.data.products
@@ -53,6 +55,7 @@ export default {
   },
   methods: {
     buildInventory() {
+      // define o estado do histórico
       let inventory = []
       for(let product of this.listProducts){
         inventory.push({
@@ -63,11 +66,12 @@ export default {
       this.$store.commit('setInventory', inventory)
     },
     setFallbackImageUrl(event) {
+      // função para adicionar imagem alternativa em caso de erros
       event.target.src = 'https://imagens.canaltech.com.br/produto/buscape/o292298908.jpg'
     },
     checkInventory(id, prodQuantity) {
       let inventory = this.$store.getters['inventory']
-      let quantity = inventory.find((el) => el.id === id ).quantity
+      let quantity = inventory.find((el) => el.id === id ).quantity // verifica a quantidade do produto em estoque
 
       if(quantity >= prodQuantity) {
         return true
@@ -76,6 +80,7 @@ export default {
       }
     },
     success() {
+      // quando o produto está em estoque
       this.$store.commit('showSnackbar', {
         text: 'Produto adicionado ao carrinho',
         timeout: 3000,
@@ -83,6 +88,7 @@ export default {
       })
     },
     error() {
+      // quando o produto não está em estoque
       this.$store.commit('showSnackbar', {
         text: 'Oops! Nosso estoque está esgotado :(',
         timeout: 3000,
@@ -96,6 +102,7 @@ export default {
       if(currentCart !== undefined) {
         let prodIndex = cart.findIndex((prod => prod.id == currentCart.id))
 
+        // verificação do estoque
         if(this.checkInventory(product.id, cart[prodIndex].quantity + 1) ) {
           cart[prodIndex].quantity++ 
           this.success()
@@ -108,9 +115,8 @@ export default {
         cart.push(product)
         this.success()
       }
-
+      // atualiza o estado do carrinho
       this.$store.commit('setCart', cart)
-      
     }
   }
 }

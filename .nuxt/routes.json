@@ -3,14 +3,12 @@
     "name": "cart",
     "path": "/cart",
     "component": "/Users/amandagama/Desktop/challenge-justdigital/pages/cart/index.vue",
-    "chunkName": "pages/cart/index",
-    "_name": "_1a27c31e"
+    "chunkName": "pages/cart/index"
   },
   {
     "name": "index",
     "path": "/",
     "component": "/Users/amandagama/Desktop/challenge-justdigital/pages/index.vue",
-    "chunkName": "pages/index",
-    "_name": "_2f4cb474"
+    "chunkName": "pages/index"
   }
 ]
